@@ -84,7 +84,7 @@ function employeeModel(db){
     // tags
     // mostrar solo name, email, tags
     //return handler(new Error("No Implementado"), null);
-  }
+  
 
   lib.addEmployeeATag = ( tag, id, handler) => {
     var curatedTags = Array.isArray(tag)? tag: [tag];

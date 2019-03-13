@@ -18,12 +18,28 @@ function initEmployee(db) {
    */
 
   router.get('/all', (req, res, next) => {
-    /*
-    empModel.xyz( (err, docs)=>{
-      return res.status(200).json(docs);
-    });
-    */
-  });// all
+
+      empModel.getEmployees(
+        (err, docs)=>{
+          if(err){
+            console.log(err);
+            return res.status(500).json({error: "Error al mostrar All"});
+          }
+          return res.status(200).json(docs);
+      }
+    )
+  });//all
+
+  router.get("/byid/:id", function (req, res, next){
+    empModel.getEmployeesById(req.params.id, (err, docs) => {
+      if(err){
+        console.log(err);
+         return res.status(500).json({error: "Error"});
+      }else{
+        return res.status(200).json({docs});
+      }
+    })
+  });
 
   
   return router;

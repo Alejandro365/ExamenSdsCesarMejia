@@ -69,12 +69,21 @@ function employeeModel(db){
   }
 
   lib.getEmployeesByTag = (tag, handler) => {
+    var queryObject= {"tag": {"$in": Array.isArray(tag)? tag: [tag]}};
+        empColl.find(queryObject).toArray((err, docs) => {
+            if(err){
+                handler(err, null);
+            }else{
+                handler(null, docs);
+            }
+        });//toArray
+    }//searchByTag
     //implementar
     // obtener todos los documentos que contenga 
     // al menos una vez el tag dentro del arreglo
     // tags
     // mostrar solo name, email, tags
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.addEmployeeATag = ( tag, id, handler) => {

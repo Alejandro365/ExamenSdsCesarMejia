@@ -94,9 +94,18 @@ function employeeModel(db){
   }//addEmployeeTag
 
   lib.removeEmployee = (id, handler) => {
+    empColl.deleteOne({"_id": ObjectID(id)}, (err, rs)=>{
+      if(err){
+        console.log(err);
+        handler(err, null);
+      } else {
+        handler(null, rs.result);
+      }
+    });//deleteOne
+
     //Implementar
     //Se requiere eliminar un documento de la colección
-    return handler(new Error("No Implementado"), null);
+    //return handler(new Error("No Implementado"), null);
   }
 
   lib.increaseAgeToAll = (ageDelta, handler) => {

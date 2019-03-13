@@ -60,7 +60,18 @@ function initEmployee(db) {
         }else{
           return res.status(200).json(rs);
         }
-  });//end addTagsToPractica
+  });//end
+  });
+
+  router.delete('/delete/:id', function(req, res, next){
+    var _employeeID = req.params.id;
+    empModel.removeEmployee(_employeeID, (err, rs) =>{
+        if(err){
+            return res.status(500).json({"error":"No se pudo eliminar dato"});
+        }else{
+            return res.status(200).json(rs);
+        }
+    })
   });
 
   

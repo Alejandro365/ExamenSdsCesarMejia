@@ -41,6 +41,28 @@ function initEmployee(db) {
     })
   });
 
+  router.get("/bycompany/:company"), function(req, res, next){
+    empModel.getEmployeesByCompany(req.params.company, (err, docs) => {
+      if(err){
+        console.log(err);
+         return res.status(500).json({error: "Error"});
+      }else{
+        return res.status(200).json({docs});
+      }
+    });
+  }
+
+  router.put('/addtag/:id', (req, res, next) =>{
+    empModel.addEmployeeATag((req.body.id || '').split('|'), req.params.id, (err, rs)=>{
+      if(err){
+          console.log(err);
+          return res.status(500).json({"error":"No se puede actualizar"});
+        }else{
+          return res.status(200).json(rs);
+        }
+  });//end addTagsToPractica
+  });
+
   
   return router;
 }

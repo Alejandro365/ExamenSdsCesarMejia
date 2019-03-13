@@ -33,17 +33,31 @@ function employeeModel(db){
           }
       }
   );//toArray
-}; // getDistBinItems
+};
     // implementar
     // Obtener un Documento solo mostrar
     // email, phone, name y age
     //return handler(new Error("No Implementado"), null);
 
   lib.getEmployeesByCompany = (company, handler) => {
+    empColl
+    .find({"company":{"$in": Array.isArray(company)? company : [company]}})
+    .project({"name": 1, "email": 1, "company": 1})
+    .toArray(
+      (err, docs)=>{
+          if(err){
+            console.log(err);
+            handler(err, null);
+          }else{
+            handler(null, docs);
+          }
+      }
+  );//toArray
+};
     // implementar
     // solo mostrar name, email, company
-    return handler(new Error("No Implementado"), null);
-  }
+    //return handler(new Error("No Implementado"), null);
+  
 
   lib.getEmployeesByAgeRange = (ageLowLimit, ageHighLimit, handler) => {
     //implementar
@@ -64,11 +78,20 @@ function employeeModel(db){
   }
 
   lib.addEmployeeATag = ( tag, id, handler) => {
+    var curatedTags = Array.isArray(tag)? tag: [tag];
+    var updateObject = {"$set": {"tag": curatedTags}};
+    empColl.updateOne({"_id": ObjectID (id)}, updateObject, (err, rs) =>{
+        if(err){
+            handler(err, null);
+        }else{
+            handler(null, rs.result);
+        }                            
+    });//updateOne
     //Implementar
     //Se requiere agregar a un documento un nuevo tag
     // $push
-    return handler(new Error("No Implementado"), null);
-  }
+    //return handler(new Error("No Implementado"), null);
+  }//addEmployeeTag
 
   lib.removeEmployee = (id, handler) => {
     //Implementar
